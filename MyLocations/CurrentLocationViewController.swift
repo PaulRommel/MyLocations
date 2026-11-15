@@ -5,8 +5,13 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class CurrentLocationViewController: UIViewController {
+
+    // Глава 27 "Pass the context": получен из SceneDelegate, передаётся
+    // далее в LocationDetailsViewController при открытии Tag Location.
+    var managedObjectContext: NSManagedObjectContext!
 
     // В книге это @IBOutlet, привязанные к сториборду. Без сториборда
     // создаём эти элементы сами и добавляем их в иерархию view вручную.
@@ -89,6 +94,7 @@ class CurrentLocationViewController: UIViewController {
 
         tagButton.setTitle("Tag Location", for: .normal)
         tagButton.isHidden = true   // показываем только когда есть координаты
+        tagButton.addTarget(self, action: #selector(tagLocation), for: .touchUpInside)
 
         getButton.setTitle("Get My Location", for: .normal)
         getButton.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
@@ -189,6 +195,22 @@ class CurrentLocationViewController: UIViewController {
 
         updateLabels()
         configureGetButton()
+    }
+
+    // Глава 25: открываем экран "Tag Location" с уже полученными
+    // координатами/адресом. Пока ничего не сохраняем — это тема
+    // следующей главы.
+    @objc func tagLocation() {
+        guard let location = location else { return }
+
+        let controller = LocationDetailsViewController()
+        controller.coordinate = location.coordinate
+        controller.placemark = placemark
+        controller.managedObjectContext = managedObjectContext
+        controller.delegate = self
+
+        let navigationController = UINavigationController(rootViewController: controller)
+        present(navigationController, animated: true)
     }
 
     // MARK: - Helper Methods
@@ -416,6 +438,32 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
                 updateLabels()
                 configureGetButton()
             }
+        }
+    }
+}
+
+// MARK: - LocationDetailsViewControllerDelegate
+// Глава 26 "Adding Polish": после нажатия Done на экране Tag Location
+// сначала закрываем модальный экран, а затем — уже на этом экране —
+// показываем короткий HUD с галочкой ("Handle the navigation").
+extension CurrentLocationViewController: LocationDetailsViewControllerDelegate {
+    func locationDetailsViewControllerDidFinish(_ controller: LocationDetailsViewController) {
+        dismiss(animated: true) { [weak self] in
+            self?.showTaggedHUD()
+        }
+    }
+
+    private func showTaggedHUD() {
+        guard let hostView = navigationController?.view ?? view else { return }
+
+        let hudView = HudView.hud(inView: hostView, animated: true)
+        hudView.text = "Tagged"
+
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            hudView.hide()
         }
     }
 }

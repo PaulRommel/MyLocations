@@ -6,11 +6,27 @@
 //
 
 import UIKit
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    // Глава 27 "Saving Locations": Core Data stack на базе
+    // NSPersistentContainer — он сам находит файл модели MyLocations.xcdatamodeld
+    // по имени, создаёт SQLite-хранилище при первом запуске и отдаёт
+    // единый контекст (viewContext) для чтения/записи на главном потоке.
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "MyLocations")
+        container.loadPersistentStores { _, error in
+            if let error = error as NSError? {
+                // Если хранилище не удалось открыть (повреждённый файл,
+                // несовместимая модель и т.п.) — это ошибка уровня запуска
+                // приложения, продолжать работу бессмысленно.
+                fatalError("Unresolved error loading persistent stores: \(error), \(error.userInfo)")
+            }
+        }
+        return container
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

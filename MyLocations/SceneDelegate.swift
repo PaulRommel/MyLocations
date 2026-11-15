@@ -18,9 +18,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
 
+        // Глава 27 "Pass the context": передаём общий NSManagedObjectContext
+        // из Core Data stack (AppDelegate) в стартовый экран — дальше он
+        // пойдёт по цепочке к Tag Location и Category Picker.
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+
         // Заголовок вкладки переименован из дефолтного "Item" в "Tag" —
         // как указано в книге для Current Location View Controller.
         let itemViewController = CurrentLocationViewController()
+        itemViewController.managedObjectContext = managedObjectContext
         itemViewController.tabBarItem = UITabBarItem(title: "Tag", image: nil, tag: 0)
 
         let tabBarController = UITabBarController()

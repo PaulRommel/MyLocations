@@ -89,6 +89,7 @@ class CurrentLocationViewController: UIViewController {
 
         tagButton.setTitle("Tag Location", for: .normal)
         tagButton.isHidden = true   // показываем только когда есть координаты
+        tagButton.addTarget(self, action: #selector(tagLocation), for: .touchUpInside)
 
         getButton.setTitle("Get My Location", for: .normal)
         getButton.addTarget(self, action: #selector(getLocation), for: .touchUpInside)
@@ -189,6 +190,20 @@ class CurrentLocationViewController: UIViewController {
 
         updateLabels()
         configureGetButton()
+    }
+
+    // Глава 25: открываем экран "Tag Location" с уже полученными
+    // координатами/адресом. Пока ничего не сохраняем — это тема
+    // следующей главы.
+    @objc func tagLocation() {
+        guard let location = location else { return }
+
+        let controller = LocationDetailsViewController()
+        controller.coordinate = location.coordinate
+        controller.placemark = placemark
+
+        let navigationController = UINavigationController(rootViewController: controller)
+        present(navigationController, animated: true)
     }
 
     // MARK: - Helper Methods

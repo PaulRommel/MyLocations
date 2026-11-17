@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0406CE930ACD07800C35441 /* MyLocations.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0406CE730ACD07800C35441 /* MyLocations.xcdatamodeld */; };
+		A0406CF230ACD48600C35441 /* MyLocations.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0406CF030ACD48600C35441 /* MyLocations.xcdatamodeld */; };
 		A0A7C5C430ACCEA700B508BE /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A7C5C330ACCEA700B508BE /* HudView.swift */; };
 		A0C60ACA30A0D85800CBDEAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C60AC930A0D85800CBDEAD /* AppDelegate.swift */; };
 		A0C60ACC30A0D85800CBDEAD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C60ACB30A0D85800CBDEAD /* SceneDelegate.swift */; };
@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A0406CE830ACD07800C35441 /* MyLocations.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyLocations.xcdatamodel; sourceTree = "<group>"; };
+		A0406CF130ACD48600C35441 /* MyLocations.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyLocations.xcdatamodel; sourceTree = "<group>"; };
 		A0A7C5C330ACCEA700B508BE /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		A0C60AC630A0D85800CBDEAD /* MyLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0C60AC930A0D85800CBDEAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +62,7 @@
 		A0C60AC830A0D85800CBDEAD /* MyLocations */ = {
 			isa = PBXGroup;
 			children = (
+				A0406CF030ACD48600C35441 /* MyLocations.xcdatamodeld */,
 				A0A7C5C330ACCEA700B508BE /* HudView.swift */,
 				A0D1234330AA049C0077362C /* LocationDetailsViewController.swift */,
 				A0D1234130AA04830077362C /* CategoryPickerViewController.swift */,
@@ -71,7 +72,6 @@
 				A0C60AD230A0D85B00CBDEAD /* Assets.xcassets */,
 				A0C60AD430A0D85B00CBDEAD /* LaunchScreen.storyboard */,
 				A0C60AD730A0D85B00CBDEAD /* Info.plist */,
-				A0406CE730ACD07800C35441 /* MyLocations.xcdatamodeld */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 				A0D1234230AA04830077362C /* CategoryPickerViewController.swift in Sources */,
 				A0C60ACE30A0D85800CBDEAD /* CurrentLocationViewController.swift in Sources */,
 				A0A7C5C430ACCEA700B508BE /* HudView.swift in Sources */,
-				A0406CE930ACD07800C35441 /* MyLocations.xcdatamodeld in Sources */,
+				A0406CF230ACD48600C35441 /* MyLocations.xcdatamodeld in Sources */,
 				A0C60ACA30A0D85800CBDEAD /* AppDelegate.swift in Sources */,
 				A0C60ACC30A0D85800CBDEAD /* SceneDelegate.swift in Sources */,
 				A0D1234430AA049C0077362C /* LocationDetailsViewController.swift in Sources */,
@@ -366,12 +366,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A0406CE730ACD07800C35441 /* MyLocations.xcdatamodeld */ = {
+		A0406CF030ACD48600C35441 /* MyLocations.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A0406CE830ACD07800C35441 /* MyLocations.xcdatamodel */,
+				A0406CF130ACD48600C35441 /* MyLocations.xcdatamodel */,
 			);
-			currentVersion = A0406CE830ACD07800C35441 /* MyLocations.xcdatamodel */;
+			currentVersion = A0406CF130ACD48600C35441 /* MyLocations.xcdatamodel */;
 			path = MyLocations.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

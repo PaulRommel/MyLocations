@@ -30,8 +30,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         itemViewController.managedObjectContext = managedObjectContext
         itemViewController.tabBarItem = UITabBarItem(title: "Tag", image: nil, tag: 0)
 
+        // Глава 28 "The Locations Tab": вторая вкладка со списком всех
+        // сохранённых локаций. Оборачиваем в navigation controller, чтобы
+        // был заголовок и кнопка Edit для удаления строк.
+        let locationsViewController = LocationsViewController()
+        locationsViewController.managedObjectContext = managedObjectContext
+        locationsViewController.tabBarItem = UITabBarItem(title: "Locations", image: nil, tag: 1)
+        let locationsNavigationController = UINavigationController(rootViewController: locationsViewController)
+
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [itemViewController]
+        tabBarController.viewControllers = [itemViewController, locationsNavigationController]
 
         window.rootViewController = tabBarController
         self.window = window

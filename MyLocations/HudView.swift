@@ -23,7 +23,7 @@ final class HudView: UIView {
         hudView.show(animated: animated)
         return hudView
     }
-
+//
     override func draw(_ rect: CGRect) {
         let boxWidth: CGFloat = 96
         let boxHeight: CGFloat = 96

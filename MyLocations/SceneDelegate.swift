@@ -13,9 +13,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+
         guard let windowScene = scene as? UIWindowScene else { return }
-        
+
         let window = UIWindow(windowScene: windowScene)
 
         // Глава 27 "Pass the context": передаём общий NSManagedObjectContext
@@ -24,22 +24,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedObjectContext = appDelegate.persistentContainer.viewContext
 
-        // Заголовок вкладки переименован из дефолтного "Item" в "Tag" —
-        // как указано в книге для Current Location View Controller.
+        // У каждой вкладки задана небольшая иконка SF Symbols. Без картинки
+        // (image: nil) UIKit в симуляторе на холодном старте иногда вообще
+        // не создаёт текстовый лейбл кнопки таб-бара — подтверждено через
+        // Debug View Hierarchy (лейбл физически отсутствовал в иерархии
+        // вьюх для вкладок без картинки). Это внутренний недокументированный
+        // путь инициализации без обходных путей через публичные layout/
+        // appearance API. С иконкой используется другой, рабочий путь
+        // отрисовки кнопки, и подпись отображается сразу.
         let itemViewController = CurrentLocationViewController()
         itemViewController.managedObjectContext = managedObjectContext
-        itemViewController.tabBarItem = UITabBarItem(title: "Tag", image: nil, tag: 0)
+        itemViewController.tabBarItem = UITabBarItem(
+            title: "Tag", image: UIImage(systemName: "location.fill"), tag: 0)
 
         // Глава 28 "The Locations Tab": вторая вкладка со списком всех
         // сохранённых локаций. Оборачиваем в navigation controller, чтобы
         // был заголовок и кнопка Edit для удаления строк.
         let locationsViewController = LocationsViewController()
         locationsViewController.managedObjectContext = managedObjectContext
-        locationsViewController.tabBarItem = UITabBarItem(title: "Locations", image: nil, tag: 1)
+        locationsViewController.tabBarItem = UITabBarItem(
+            title: "Locations", image: UIImage(systemName: "list.bullet"), tag: 1)
         let locationsNavigationController = UINavigationController(rootViewController: locationsViewController)
 
+        // Глава 29 "Maps": третья вкладка с картой и булавками для всех
+        // сохранённых локаций.
+        let mapViewController = LocationsMapViewController()
+        mapViewController.managedObjectContext = managedObjectContext
+        mapViewController.tabBarItem = UITabBarItem(
+            title: "Map", image: UIImage(systemName: "map.fill"), tag: 2)
+        let mapNavigationController = UINavigationController(rootViewController: mapViewController)
+
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [itemViewController, locationsNavigationController]
+        tabBarController.viewControllers = [itemViewController, locationsNavigationController, mapNavigationController]
 
         window.rootViewController = tabBarController
         self.window = window
@@ -76,4 +92,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

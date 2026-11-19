@@ -262,8 +262,6 @@ class CurrentLocationViewController: UIViewController {
                 } else {
                     statusMessage = "Error Getting Location"
                 }
-            } else if !CLLocationManager.locationServicesEnabled() {
-                statusMessage = "Location Services Disabled"
             } else if updatingLocation {
                 statusMessage = "Searching..."
             } else {
@@ -305,7 +303,13 @@ class CurrentLocationViewController: UIViewController {
     }
 
     func startLocationManager() {
-        guard CLLocationManager.locationServicesEnabled() else { return }
+        // CLLocationManager.locationServicesEnabled() — тоже синхронный
+        // вызов, который Apple просит не делать на главном потоке (та же
+        // причина, что и для authorizationStatus). Разрешение уже
+        // проверено в getLocation() через закэшированный authorizationStatus,
+        // так что здесь достаточно убедиться, что оно даёт право на запуск.
+        guard authorizationStatus == .authorizedWhenInUse
+            || authorizationStatus == .authorizedAlways else { return }
 
         // delegate уже назначен в viewDidLoad — он должен быть на месте
         // постоянно, чтобы ловить locationManagerDidChangeAuthorization
